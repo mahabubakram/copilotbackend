@@ -5,12 +5,15 @@ from celery import shared_task
 
 from copilot_api.gptQuery.gptCommons import CreateGPTQuery
 from copilot_api.models import Resume
+from fileupload.tasks.resumeparser import ResumeParser
 
 
 def GptTaskResumeInsight(prompt):
     gptQuery = CreateGPTQuery(prompt)
     prompt = prompt + os.linesep \
-             + "can you tell me what are the professional experience from these texts above. It can be in German language the whole texts above"
+             + "from the text above, detect the language and give me the list of professional experiences in the same language, " \
+               "including their employer details and detail work experiences. " \
+               "make it as a json object but list the responsibilites as a list."
     gptQuery.PROMPT = prompt
     gptQuery.generate()
     print(gptQuery.get_result())
@@ -22,6 +25,8 @@ def resume_parser(arg1, arg2):
     # Task logic here
     resumes = Resume.objects.filter(parsed=False)
     for resume in resumes:
+        parsed_resume = ResumeParser.resumeparser(resume.file.name)
+        resume.parsed_resume = parsed_resume
         resume.resume_insight = GptTaskResumeInsight(resume.parsed_resume)
         resume.parsed = True
         resume.save()

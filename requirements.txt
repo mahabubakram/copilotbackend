@@ -16,9 +16,8 @@ requests~=2.31.0
 packaging~=23.2
 djangorestframework~=3.14.0
 pyparsing~=3.1.1
-fitz~=0.0.1.dev2
 openai~=1.12.0
 celery~=5.3.6
 psycopg2-binary
-PyMuPDF~=1.23.26
 SQLAlchemy~=2.0.28
+PyMuPDF~=1.23.22

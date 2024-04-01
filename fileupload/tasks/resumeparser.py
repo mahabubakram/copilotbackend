@@ -1,8 +1,8 @@
 import json
 import os
 import re
-
 import fitz
+
 
 from copilotbackend.settings import MEDIA_ROOT
 

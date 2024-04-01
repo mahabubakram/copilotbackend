@@ -24,7 +24,7 @@ class ResumeListApiView(APIView):
         List all the resume items for given requested user
         '''
         print("calling the task")
-        resume_parser.delay(3, 5)
+        resume_parser(3, 5)
         print("calling done")
         resumes = Resume.objects.all()
         serializer = ResumeSerializer(resumes, many=True)
@@ -43,7 +43,7 @@ class ResumeListApiView(APIView):
             'work_experience': request.data.get('work_experience'),
             'file': request.data.get('file'),
         }
-        data['parsed_resume'] = "null"
+        # data['parsed_resume'] = ResumeParser.resumeparser("Lebenslauf_Akram_DE.pdf")
 
         serializer = self.serializer_class(data=data)
         if serializer.is_valid():
