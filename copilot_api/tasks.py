@@ -3,19 +3,16 @@ import os
 
 from celery import shared_task
 
-from copilot_api.gptQuery.gptCommons import CreateGPTQuery
+from copilot_api.gptQuery.gptCommons import GPTQuery
 from copilot_api.models import Resume
 from fileupload.tasks.resumeparser import ResumeParser
 
 
-def GptTaskResumeInsight(prompt):
-    gptQuery = CreateGPTQuery(prompt)
-    prompt = prompt + os.linesep \
-             + "from the text above, detect the language and give me the list of professional experiences in the same language, " \
-               "including their employer details and detail work experiences. " \
-               "make it as a json object but list the responsibilites as a list."
-    gptQuery.PROMPT = prompt
-    gptQuery.generate()
+def GptTaskResumeInsight(resume):
+    system_prompt = """Act as a resume parser agent. 
+    You will be given a resume, detect the language and give me the list of professional experiences from the resume in the same language, including their employer details and detail work experiences.
+    Your output should be a valid json object. List the extracted responsibilities as a list."""
+    gptQuery = GPTQuery(system_prompt, resume)
     print(gptQuery.get_result())
     return gptQuery.get_result()
 
