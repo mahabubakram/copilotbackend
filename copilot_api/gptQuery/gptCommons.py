@@ -7,21 +7,19 @@ class GPTQuery:
     CLIENT = OpenAI(api_key=OPENAI_API_KEY)
     PROMPT = None
 
-    def __init__(self, system_prompt, user_prompt, tokens=2000, temperature=1):
+    def __init__(self, system_prompt, tokens=2000, temperature=1):
         self._system_prompt = system_prompt
-        self._user_prompt = user_prompt
         self._result = None
         self._max_tokens = tokens
         self._temperature = temperature
-        self.generate()
 
-    def generate(self):
+    def process(self, query):
         try:
             completion = self.CLIENT.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": self._system_prompt},
-                    {"role": "user", "content": self._user_prompt},
+                    {"role": "user", "content": query},
                 ],
                 max_tokens=self._max_tokens,
                 temperature=self._temperature
