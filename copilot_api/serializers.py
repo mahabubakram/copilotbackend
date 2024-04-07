@@ -5,5 +5,5 @@ from .models import Resume
 class ResumeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resume
-        fields = ["address", "firstname", "lastname", "education", "work_experience", "parsed_resume", "file",
-                  "uploaded_on"]
+        fields = ["parsed_resume", "file", "uploaded_on", "parsed", "resume_insight", "user_id", "submitted_form_data",
+                  "submitted_pdf_url", "email", "submitted_pdf_path"]

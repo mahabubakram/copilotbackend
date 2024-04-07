@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'copilot_api',
     "fileupload",
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -131,6 +133,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# cron jobs
+filename = os.path.join(BASE_DIR, 'copilot_api/cronTasks.py')
+CRONJOBS = [
+    ('*/10 * * * * *', 'copilotbackend.cronTasks.get_resume_and_parse')
+    # Add more cron jobs as needed
+]
 # Celery settings
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 
