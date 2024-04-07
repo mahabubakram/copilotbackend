@@ -3,10 +3,9 @@ from rest_framework.response import Response
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework import status
 
-from copilot_api.cronTasks import get_resume_and_parse
 from .models import Resume
 from .serializers import ResumeSerializer
-from .tasks import resume_parser
+from .resumeParsing import resume_parser
 from supabase import create_client, Client
 supabase: Client = create_client("https://kexddhjgsuypqmvxhnoy.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtleGRkaGpnc3V5cHFtdnhobm95Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwNjcxNjQ2NiwiZXhwIjoyMDIyMjkyNDY2fQ.oG3q-bW1xpYoCdtMLVaqvoXGd3m23S4jsGQ7ZcGUJBM")
 
